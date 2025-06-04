@@ -12,11 +12,11 @@
 ;;   (-> exact-integer? (listof exact-integer?))
 (define (get-row n)
   (match n
-    [1 '(1)]
-    [2 '(1 1)]
+    [0 '(1)]
+    [1 '(1 1)]
     ;; [_ (let loop ([i 2] [arr (append '(1 1) (make-list (add1 (quotient (add1 n) 2)) 0))])
+    ;; [_ (let loop ([i 1] [arr (append '(1 1) ((compose (curryr make-list 0) (curryr quotient 2)) n))])
     [_ (let loop ([i 2] [arr (append '(1 1) ((compose (curryr make-list 0) add1 (curryr quotient 2) add1) n))])
-    ;; [_ (let loop ([i 2] [arr (append '(1 1) ((curryr compose add1 (curryr quotient 2) add1 (curryr make-list 0)) n))])
          (cond
            [(> i n) arr]
            [else (loop
@@ -30,4 +30,8 @@
                                           (list-ref arr x)
                                           (list-ref arr (add1 x)))) )))) )]))]))
 
+(get-row 0)
+(get-row 1)
+(get-row 2)
+(get-row 3)
 (get-row 4)
