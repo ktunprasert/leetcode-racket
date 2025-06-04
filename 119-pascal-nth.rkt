@@ -11,27 +11,17 @@
 ;; (define/contract (get-row n)
 ;;   (-> exact-integer? (listof exact-integer?))
 (define (get-row n)
-  ;; (println n)
-  ;; (println (append '(1 1) (make-list (- n 1) 0)))
   (match n
     [0 '(1)]
     [1 '(1 1)]
-    [_ (let loop ([i 2] [arr (append '(1 1) (make-list (sub1 n) 0))])
+    [_ (let loop ([i 2] [arr '(1 1)])
          (cond
            [(> i n) arr]
-           [else (loop
-                  (add1 i)
-                  (reverse
-                   (foldl append '(1)
-                          (build-list n
-                                      (lambda (x)
-                                        (list
-                                         (+
-                                          (list-ref arr x)
-                                          (list-ref arr (add1 x)))) )))) )]))]))
+           [else (loop (add1 i)
+                       (append '(1) (build-list (sub1 i) (lambda (x) (+ (list-ref arr x) (list-ref arr (add1 x))) )) '(1)))]))]))
 
-(get-row 0)
+;; (get-row 0)
 ;; (get-row 1)
-;; (get-row 2)
-;; (get-row 3)
-;; (get-row 1000)
+;; (get-row 4)
+;; (get-row 25)
+(get-row 1000)
