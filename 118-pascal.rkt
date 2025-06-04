@@ -4,8 +4,8 @@
 (define (window2 lst)
   (let loop ([lst lst] [out '()])
     (match lst
-      [(list a b) (append out (list (list a b)))]
-      [_ (loop (cdr lst) (append out (list (list (car lst) (cadr lst)))))])))
+      [(list a b) (cons (list a b) out)]
+      [_ (loop (cdr lst) (cons (list (car lst) (cadr lst)) out))])))
 
 (define (pascal n)
   (match n [1 '(1)] [2 '(1 1)]
@@ -20,8 +20,8 @@
   (-> exact-integer? (listof (listof exact-integer?)))
   (let loop ([n 1] [lst '()])
     (cond
-      [(> n numRows) lst]
-      [else (loop (add1 n) (append lst (list (pascal n))))]
+      [(> n numRows) (reverse lst)]
+      [else (loop (add1 n) (cons (pascal n) lst))]
       )
     )
   )
