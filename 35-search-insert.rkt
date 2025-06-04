@@ -2,17 +2,17 @@
 
 (define/contract (search-insert nums target)
   (-> (listof exact-integer?) exact-integer? exact-integer?)
-  (define (bin-search nums target low high)
+  (let bin-search ([low 0]
+                   [high (sub1 (length nums))])
     (define mid (quotient (+ low high) 2))
     (define mid-val (list-ref nums mid))
     (cond
       [(> low high) low]
       [(= mid-val target) mid]
-      [(> mid-val target) (bin-search nums target low (sub1 mid))]
-      [(< mid-val target) (bin-search nums target (add1 mid) high)]
+      [(> mid-val target) (bin-search low (sub1 mid))]
+      [(< mid-val target) (bin-search (add1 mid) high)]
       )
     )
-  (bin-search nums target 0 (sub1 (length nums)))
   )
 
 (search-insert '(1 3 5 6) 5) ; should be 2
