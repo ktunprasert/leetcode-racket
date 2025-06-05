@@ -9,10 +9,12 @@
 ;; 0 skip
 ;; finally convert
 (define (min-operations boxes)
-  '()
+  (define vec (vector-extend #() (string-length boxes )) )
+  (for ([(c i) (in-indexed boxes)] #:when (char=? c #\1) )
+    (for/vector ([(n j) (in-indexed vec)]) (vector-set! vec j (+ n (abs (- j i))) ))
+    )
+  (vector->list vec)
   )
-
-
 
 (require rackunit)
 
