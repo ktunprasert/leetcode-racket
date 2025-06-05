@@ -3,23 +3,15 @@
 (require rackunit)
 
 (define (fast-sum n)
-  (/ (* n (add1 n)) 2)
+  (/ (* n (add1 n)) 2) ; n/2 * (n+1)
   )
 
 ; 1 <= n, m <= 1000
 (define (difference-of-sums n m)
-  (cond
-    [(> m n) (fast-sum n)]
-    [(= m 1) (- (fast-sum n))]
-    [(= m n) (- (fast-sum n) (* 2 m))]
-    [else
-     (let loop ([num 1] [acc (fast-sum n)])
-       (cond [(> num n) acc]
-             [(= 0 (modulo num m )) (loop (add1 num) (- acc (* 2 num) ) )]
-             [else
-              (loop (add1 num) acc )
-              ] ) )]
-    )
+  (let loop ([num 1] [acc (fast-sum n)])
+    (cond [(> num n) acc]
+          [(= 0 (modulo num m )) (loop (add1 num) (- acc (* 2 num) ) )]
+          [else (loop (add1 num) acc )]))
   )
 
 
