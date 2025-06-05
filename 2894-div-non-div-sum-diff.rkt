@@ -8,10 +8,17 @@
 
 ; 1 <= n, m <= 1000
 (define (difference-of-sums n m)
-  (let loop ([num 1] [acc (fast-sum n)])
-    (cond [(> num n) acc]
-          [(= 0 (modulo num m )) (loop (add1 num) (- acc (* 2 num) ) )]
-          [else (loop (add1 num) acc )]))
+  (let* (
+         [k (quotient n m)]
+         [total-sum (fast-sum n)]
+         ; natural series up to k
+         ; expand series into (1 .. n)*m
+         ; m1 + m2 + ... + mk
+         ; m/2 * (m*k + m)
+         [div-sum (* (fast-sum k) m)]
+         )
+    (- total-sum (* 2 div-sum))
+    )
   )
 
 
