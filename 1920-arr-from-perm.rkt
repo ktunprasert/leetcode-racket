@@ -7,8 +7,7 @@
 ; 1 <= nums.length <= 1000
 ; 0 <= nums[i] <= nums.length
 (define (build-array nums)
-  (define vref (curry vector-ref (list->vector nums)))
-  (map vref nums)
+  (map (curry vector-ref (list->vector nums)) nums)
   )
 
 
