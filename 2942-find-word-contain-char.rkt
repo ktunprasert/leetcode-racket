@@ -3,9 +3,7 @@
 (require rackunit)
 
 (define (find-words-containing words c)
-  (for/fold ([out '()]) ([w words] [i (range (length words))])
-    (if (for/or ([char w]) (char=? c char) ) (append out (list i)) out)
-    )
+  (for/list ([(w i) (in-indexed words)] #:when (string-contains? w (string c))) i)
   )
 
 
