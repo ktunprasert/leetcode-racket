@@ -8,19 +8,14 @@
 
 ; 1 <= n, m <= 1000
 (define (difference-of-sums n m)
-  (let* (
-         [k (quotient n m)]
+  (let* ([k (quotient n m)]
          [total-sum (fast-sum n)]
          ; natural series up to k
          ; expand series into (1 .. n)*m
          ; m1 + m2 + ... + mk
          ; m/2 * (m*k + m)
-         [div-sum (* (fast-sum k) m)]
-         )
-    (- total-sum (* 2 div-sum))
-    )
-  )
-
+         [div-sum (* (fast-sum k) m)])
+    (- total-sum (* 2 div-sum))))
 
 (check-equal? (difference-of-sums 10 3) 19)
 (check-equal? (difference-of-sums 5 6) 15)

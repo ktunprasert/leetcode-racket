@@ -1,10 +1,9 @@
 #lang racket
 
-
-(define
-  (is-power-of-two n)
-  (match n [0 #f] [_ (= 0 (bitwise-and n (sub1 n)))]))
-
+(define (is-power-of-two n)
+  (match n
+    [0 #f]
+    [_ (= 0 (bitwise-and n (sub1 n)))]))
 
 ;; (is-power-of-two -128)
 ;; (is-power-of-two -2)

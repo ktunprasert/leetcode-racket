@@ -7,7 +7,10 @@
   (define good 0)
 
   (for ([n nums])
-    (if (hash-has-key? h n) (begin (set! good (+ good (hash-ref h n))) (hash-update! h n add1))
+    (if (hash-has-key? h n)
+        (begin
+          (set! good (+ good (hash-ref h n)))
+          (hash-update! h n add1))
         (hash-set! h n 1)))
 
   good)

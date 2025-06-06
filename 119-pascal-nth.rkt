@@ -14,11 +14,17 @@
   (match n
     [0 '(1)]
     [1 '(1 1)]
-    [_ (let loop ([i 2] [arr '(1 1)])
-         (cond
-           [(> i n) arr]
-           [else (loop (add1 i)
-                       (append '(1) (build-list (sub1 i) (lambda (x) (+ (list-ref arr x) (list-ref arr (add1 x))) )) '(1)))]))]))
+    [_
+     (let loop ([i 2]
+                [arr '(1 1)])
+       (cond
+         [(> i n) arr]
+         [else
+          (loop (add1 i)
+                (append '(1)
+                        (build-list (sub1 i)
+                                    (lambda (x) (+ (list-ref arr x) (list-ref arr (add1 x)))))
+                        '(1)))]))]))
 
 ;; (get-row 0)
 ;; (get-row 1)

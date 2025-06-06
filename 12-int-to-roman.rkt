@@ -17,10 +17,7 @@
       [(>= n 5) (convert (- n 5) (string-append str "V"))]
       [(>= n 4) (convert (- n 4) (string-append str "IV"))]
       [(>= n 1) (convert (- n 1) (string-append str "I"))]
-      [else str]
-      )
-    )
-  (convert num "")
-  )
+      [else str]))
+  (convert num ""))
 
 (int-to-roman 1996) ; should be III

@@ -10,10 +10,7 @@
       [(> low high) low]
       [(= mid-val target) mid]
       [(> mid-val target) (bin-search low (sub1 mid))]
-      [(< mid-val target) (bin-search (add1 mid) high)]
-      )
-    )
-  )
+      [(< mid-val target) (bin-search (add1 mid) high)])))
 
 (search-insert '(1 3 5 6) 5) ; should be 2
 (search-insert '(1 3 5 6) 4) ; should be 2

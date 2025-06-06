@@ -1,11 +1,15 @@
 #lang racket
 
 (define (pivot-array nums pivot)
-  ((compose
-    (curry apply append)
-    (curryr sort #:key car <)
-    (curry group-by (lambda (n) (cond [(> n pivot) 1] [(< n pivot) -1] [else 0])))
-    ) nums))
+  ((compose (curry apply append)
+            (curryr sort #:key car <)
+            (curry group-by
+                   (lambda (n)
+                     (cond
+                       [(> n pivot) 1]
+                       [(< n pivot) -1]
+                       [else 0]))))
+   nums))
 
 (require rackunit)
 

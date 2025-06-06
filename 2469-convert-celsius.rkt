@@ -1,8 +1,7 @@
 #lang racket
 
 (define (convert-temperature celsius)
-  (list (+ 273.15 celsius) (+ 32. (* 1.8 celsius) ) )
-  )
+  (list (+ 273.15 celsius) (+ 32. (* 1.8 celsius))))
 
 (require rackunit)
 
