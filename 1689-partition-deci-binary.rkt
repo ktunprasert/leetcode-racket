@@ -5,7 +5,7 @@
   (for/fold ([max-char #\0]
              #:result (- (char->integer max-char) 48))
             ([c n]
-             #:when (not (char=? #\0 c)))
+             #:when (char>? c max-char))
     (values (if (char>? c max-char) c max-char))))
 
 (min-partitions "32")
