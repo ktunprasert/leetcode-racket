@@ -1,10 +1,10 @@
 #lang racket
 
 (define (subset-xor-sum nums)
-  (for/sum ([ls (in-combinations nums)])
-    (apply bitwise-xor ls)
-    )
-  )
+  (let ([n     (length nums)]
+        [all-or (foldl bitwise-ior 0 nums)])
+    (if (zero? n) 0
+        (* (expt 2 (- n 1)) all-or))))
 
 
 (require rackunit)
