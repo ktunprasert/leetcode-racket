@@ -8,18 +8,28 @@
   (define len (string-length boxes))
   (define ops (make-vector len 0))
 
-  (define (prefix-loop fn [i 0] [end len] [found 0] [idx-sum 0])
-    (if (= i end) '()
-        (begin
-          (vector-set! ops i (+ (vector-ref ops i) (abs (- (* i found) idx-sum))))
-          (match (string-ref boxes i)
-            [#\0 (begin (prefix-loop fn (fn i) end found idx-sum))]
-            [#\1 (begin (prefix-loop fn (fn i) end (add1 found) (+ idx-sum i)))]
-            ))))
+  (define left-sum 0)
+  (define left-found 0)
+  (for ([i (in-range len)])
+    (when (char=? (string-ref boxes i) #\1)
+      (set! left-sum (+ left-sum i))
+      (set! left-found (add1 left-found))
+      )
+    (vector-set! ops i (- (* i left-found) left-sum))
+    )
 
-  (prefix-loop add1)
-  (prefix-loop sub1 (sub1 len) -1)
-  (vector->list ops )
+  (define right-sum 0)
+  (define right-found 0)
+  (for ([i (in-range (sub1 len) -1 -1)])
+    (when (char=? (string-ref boxes i) #\1)
+      (set! right-sum (+ right-sum i))
+      (set! right-found (add1 right-found))
+      )
+
+    (vector-set! ops i (+ (vector-ref ops i) (- right-sum (* i right-found) ) ) )
+    )
+
+  (vector->list ops)
   )
 
 (require rackunit)
