@@ -6,14 +6,13 @@
 
 (define (min-operations boxes)
   (define len (string-length boxes))
-  (define ops (vector-extend #() len))
-  (define box-vec ((compose list->vector string->list) boxes))
+  (define ops (make-vector len 0))
 
   (define (prefix-loop fn [i 0] [end len] [found 0] [idx-sum 0])
     (if (= i end) '()
         (begin
           (vector-set! ops i (+ (vector-ref ops i) (abs (- (* i found) idx-sum))))
-          (match (vector-ref box-vec i)
+          (match (string-ref boxes i)
             [#\0 (begin (prefix-loop fn (fn i) end found idx-sum))]
             [#\1 (begin (prefix-loop fn (fn i) end (add1 found) (+ idx-sum i)))]
             ))))
