@@ -5,7 +5,7 @@
 (define (bst-to-gst root)
   (define sum 0)
   (let loop ([node root])
-    (when (not (eq? #f node))
+    (when (tree-node? node)
       (begin
         (loop (tree-node-right node))
 
