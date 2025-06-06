@@ -3,19 +3,24 @@
 (require "list-node-helper.rkt")
 
 (define (merge-nodes head)
+  (define vec (make-vector (* 2 (expt 10 5))))
   (let loop ([next (list-node-next head)]
-             [current head]
-             [prev head])
-    (if (not (eq? #f next))
+             [i 0])
+    (if (eq? #f next)
+        (set! vec (vector-take vec i))
         (match (list-node-val next)
-          [0 (loop (list-node-next next) (list-node-next current) current)]
+          [0 (loop (list-node-next next) (add1 i))]
           [n
            (begin
-             (set-list-node-val! current (+ n (list-node-val current)))
-             (set-list-node-next! current (list-node-next next))
-             (loop (list-node-next next) current current))])
-        (set-list-node-next! prev #f)))
-  head)
+             (vector-set! vec i (+ (vector-ref vec i) n))
+             (loop (list-node-next next) i))])))
+
+  (let ([len (vector-length vec)])
+    (let loop ([i (sub1 len)]
+               [next #f])
+      (if (< i 0)
+          next
+          (let ([node (list-node (vector-ref vec i) next)]) (loop (sub1 i) node))))))
 
 (require rackunit)
 
