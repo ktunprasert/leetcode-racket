@@ -2,13 +2,11 @@
 
 (define/contract (find-array pref)
   (-> (listof exact-integer?) (listof exact-integer?))
-  (let loop ([cache 0]
-             [rest pref]
-             [out '()])
-    (if (null? rest)
-        (reverse out)
-        (let* ([n (car rest)]
-               [new (bitwise-xor cache n)])
-          (loop (bitwise-xor cache new) (cdr rest) (cons new out))))))
+  (define prefix 0)
+  (for/list ([n pref])
+    (begin
+      (define new (bitwise-xor prefix n))
+      (set! prefix (bitwise-xor prefix new))
+      new)))
 
-(find-array '(5 2 0 3 1)) ; 5,7,2,3,2
+(find-array '(5 2 0 3 1))
