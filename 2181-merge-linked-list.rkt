@@ -17,6 +17,8 @@
         (set-list-node-next! prev #f)))
   head)
 
-;; (merge-nodes (build-list-nodes '(0 1 1 0)))
-;; (merge-nodes (build-list-nodes '(0 1 1 0 1 0)))
-(merge-nodes (build-list-nodes '(0 1 0 1 0 1 0)))
+(require rackunit)
+
+(check-equal? (merge-nodes (build-list-nodes '(0 1 1 0))) (build-list-nodes '(2)))
+(check-equal? (merge-nodes (build-list-nodes '(0 1 1 0 1 0))) (build-list-nodes '(2 1)))
+(check-equal? (merge-nodes (build-list-nodes '(0 1 0 1 0 1 0))) (build-list-nodes '(1 1 1)))
