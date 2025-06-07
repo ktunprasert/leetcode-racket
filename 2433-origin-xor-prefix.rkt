@@ -5,6 +5,8 @@
              [prefix 0]
              #:result (reverse out))
             ([n (in-list pref)])
-    (values (cons (bitwise-xor prefix n) out) (bitwise-xor prefix (bitwise-xor prefix n)))))
+    (let* ([found (bitwise-xor prefix n)]
+           [prefix (bitwise-xor prefix found)])
+      (values (cons found out) prefix))))
 
 (find-array '(5 2 0 3 1))
