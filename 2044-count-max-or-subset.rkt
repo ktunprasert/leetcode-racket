@@ -1,5 +1,6 @@
 #lang racket
 
+; im too lazy to optimise this
 (define (count-max-or-subsets nums)
   (define max-or (apply bitwise-ior nums))
   (for/fold ([count 0])
