@@ -7,7 +7,7 @@
          [h-freq (for/fold ([h (make-immutable-hash)])
                            ([v sorted]
                             [i (in-naturals)]
-                            #:when (not (hash-has-key? h v)))
+                            #:unless (hash-has-key? h v))
                    (hash-set h v i))])
     (for/list ([n nums])
       (hash-ref h-freq n))))
