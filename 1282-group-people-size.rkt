@@ -4,12 +4,12 @@
   (for/fold ([hgroup (make-immutable-hash)]
              [hcount (make-immutable-hash)]
              [out empty]
-             #:result (append out empty (hash-values hgroup))
+             #:result (append out (hash-values hgroup))
              )
             ([n (in-list groupSizes)]
              [i (in-naturals)])
 
-    (if (= n (hash-ref hcount n -12345))
+    (if (= n (hash-ref hcount n 0))
         (let* ([group (hash-ref hgroup n)]
                [hgroup (hash-set hgroup n empty)]
                [hcount (hash-set hcount n 0)])
