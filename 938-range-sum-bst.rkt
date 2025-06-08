@@ -3,7 +3,7 @@
 (require "bin-tree-helper.rkt")
 
 (define (range-sum-bst root low high)
-  (if (eq? root #f)
+  (if (false? root)
       0
       (let* ([node-val (tree-node-val root)]
              [node-acc (if (and (<= node-val high) (>= node-val low)) node-val 0)]
