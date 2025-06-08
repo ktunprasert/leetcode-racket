@@ -1,20 +1,11 @@
 #lang racket
 
 (define (group-the-people groupSizes)
-  ;; (let-values ([(group-hash count-hash) (for/fold ([hgroup (make-immutable-hash)]
-  ;;                                                  [hcount (make-immutable-hash)])
-  ;;                                                 ([n (in-list groupSizes)]
-  ;;                                                  [i (in-naturals)])
-  ;;                                         (values (hash-update hgroup n (curry cons i) empty)
-  ;;                                                 (hash-update hcount n add1 0)))])
-  ;;   (println group-hash)
-  ;;   (println count-hash)
-  ;;   (for/list ([a (in-hash-pairs group-hash)])
-  ;;     (rest a))
-  ;;   )
   (for/fold ([hgroup (make-immutable-hash)]
              [hcount (make-immutable-hash)]
-             [out empty])
+             [out empty]
+             #:result (append out empty (hash-values hgroup))
+             )
             ([n (in-list groupSizes)]
              [i (in-naturals)])
 
