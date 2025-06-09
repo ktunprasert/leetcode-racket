@@ -7,9 +7,9 @@
   (for/fold ([balance 0]) ([c s])
     (when (= 0 balance)
       (set! total (add1 total)))
-    (case c
-      [(#\R) (add1 balance)]
-      [(#\L) (sub1 balance)]))
+    (match c
+      [#\R (add1 balance)]
+      [#\L (sub1 balance)]))
 
   total)
 
