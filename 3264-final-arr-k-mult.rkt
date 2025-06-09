@@ -1,26 +1,21 @@
 #lang racket
-(require data/heap)
 
 (define (get-final-state nums k multiplier)
-  (define heap
-    (make-heap (lambda (a b) (or (< (cdr a) (cdr b)) (and (= (cdr a) (cdr b)) (< (car a) (car b)))))))
+  (define arr (list->vector nums))
+  (define n (vector-length arr))
 
-  ; Initialize heap with (index . value) pairs
-  (for ([val nums]
-        [i (in-naturals)])
-    (heap-add! heap (cons i val)))
-
-  ; Perform k multiplications
   (for ([_ (in-range k)])
-    (define min-pair (heap-min heap))
-    (heap-remove-min! heap)
-    (heap-add! heap (cons (car min-pair) (* (cdr min-pair) multiplier))))
+    (define min-val (vector-ref arr 0))
+    (define min-idx 0)
 
-  ; Reconstruct the array
-  (define result (make-vector (length nums)))
-  (for ([pair (in-heap heap)])
-    (vector-set! result (car pair) (cdr pair)))
+    (for ([i (in-range 1 n)])
+      (define val (vector-ref arr i))
+      (when (< val min-val)
+        (set! min-val val)
+        (set! min-idx i)))
 
-  (vector->list result))
+    (vector-set! arr min-idx (* min-val multiplier)))
+
+  (vector->list arr))
 
 (get-final-state '(2 1 3 5 6) 5 2)
