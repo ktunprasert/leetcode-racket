@@ -1,7 +1,7 @@
 #lang racket
 
 (define (within-circle a b x y r)
-  (<= (expt (+ (expt (- a x) 2) (expt (- b y) 2)) 1/2) r))
+  (<= (+ (expt (- a x) 2) (expt (- b y) 2)) (expt r 2)))
 
 (define/contract (count-points points queries)
   (-> (listof (listof exact-integer?)) (listof (listof exact-integer?)) (listof exact-integer?))
