@@ -2,17 +2,8 @@
 
 (define/contract (find-center edges)
   (-> (listof (listof exact-integer?)) exact-integer?)
-
-  (define edgy (make-hash))
-  (define look-for (length edges))
-  (define found 0)
-
-  (for* ([e edges]
-         [n e]
-         #:do [(hash-update! edgy n add1 0) (set! found n)]
-         #:break (= (hash-ref edgy n) look-for))
-    (void))
-
-  found)
+  (match-let ([(list a b) (car edges)]
+              [(list c d) (cadr edges)])
+    (if (or (= a c) (= a d)) a b)))
 
 (find-center '((1 2) (2 3) (4 2)))
