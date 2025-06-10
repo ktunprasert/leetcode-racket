@@ -1,10 +1,12 @@
 #lang racket
 
 (define (reverse-prefix word ch)
-  (define ch-idx (string-find word (format "~a" ch)))
-  (define word-list (string->list word))
-  (define reversed (reverse (take word-list (add1 ch-idx))))
-  (list->string (append reversed (drop word-list (add1 ch-idx))))
-  )
+  (let loop ([out empty]
+             [rest (string->list word)])
+    (cond
+      [(empty? rest) word]
+      [(char=? ch (car rest)) (list->string (append (cons (car rest) out) (cdr rest)))]
+      [else (loop (cons (car rest) out) (cdr rest))])))
 
 (reverse-prefix "hello world" #\o)
+(reverse-prefix "abcdef" #\f)
