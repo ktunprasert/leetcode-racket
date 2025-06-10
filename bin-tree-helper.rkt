@@ -9,8 +9,8 @@
 (struct tree-node (val left right) #:mutable #:transparent)
 
 ; constructor
-(define (make-tree-node [val 0])
-  (tree-node val #f #f))
+(define (make-tree-node [val 0] [left #f] [right #f])
+  (tree-node val left right))
 
 ;; Build a balanced BST from a sorted list
 (define (build-balanced-tree vals)
