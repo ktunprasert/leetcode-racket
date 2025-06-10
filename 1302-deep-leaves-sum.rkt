@@ -2,23 +2,24 @@
 
 (require "bin-tree-helper.rkt")
 
-(define deepest 0)
-(define total 0)
-(define (deepest-leaves-sum root [depth 0])
-  (when (= depth 0)
-    (set! deepest 0)
-    (set! total 0))
-  (cond
-    [(false? root) 0]
-    [else
-     (when (= depth deepest)
-       (set! total (+ total (tree-node-val root))))
-     (when (> depth deepest)
-       (set! deepest depth)
-       (set! total (tree-node-val root)))
-     (deepest-leaves-sum (tree-node-left root) (add1 depth))
-     (deepest-leaves-sum (tree-node-right root) (add1 depth))])
-  total)
+(define deepest (make-parameter 0))
+(define total (make-parameter 0))
+(define (deepest-leaves-sum root)
+  (parameterize ([deepest 0]
+                 [total 0])
+    (define (helper node d)
+      (cond
+        [(false? node) 0]
+        [else
+         (when (= d (deepest))
+           (total (+ (total) (tree-node-val node))))
+         (when (> d (deepest))
+           (deepest d)
+           (total (tree-node-val node)))
+         (helper (tree-node-left node) (add1 d))
+         (helper (tree-node-right node) (add1 d))]))
+    (helper root 0)
+    (total)))
 
 (define tn make-tree-node)
 
