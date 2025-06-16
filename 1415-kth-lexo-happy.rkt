@@ -5,7 +5,6 @@
 (define (get-happy-string n k)
   (define result '())
   (define found #f)
-
   (define (backtrack current-chars)
     (cond
       [found #f] ; Early termination
@@ -20,7 +19,7 @@
            (backtrack (cons c current-chars))))]))
   (backtrack '())
   (if (and (>= (length result) k) (> k 0))
-      (list-ref (reverse result) (sub1 k))
+      (car result)
       ""))
 
 (get-happy-string 2 1)
