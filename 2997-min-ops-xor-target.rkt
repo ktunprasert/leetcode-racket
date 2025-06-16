@@ -6,6 +6,10 @@
     [else (bitcount (bitwise-and n (sub1 n)) (add1 count))]))
 
 (define (min-operations nums k)
-  (bitcount (foldl bitwise-xor k nums)))
+  (for/fold ([acc k]
+             #:result (bitcount acc))
+            ([n nums]
+             #:when (> n 0))
+    (bitwise-xor acc n)))
 
 (min-operations (list 1 2 3 4 1 2 3) 1)
