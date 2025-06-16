@@ -1,8 +1,7 @@
 #lang racket
 
 (define (stable-mountains height threshold)
-  (for/list ([(n i) (in-indexed height)]
-             #:break (= n (length height))
+  (for/list ([(n i) (in-indexed (drop-right height 1))]
              #:when (> n threshold))
     (add1 i)))
 
