@@ -6,6 +6,9 @@
     [else (bitcount (bitwise-and n (sub1 n)) (add1 count))]))
 
 (define (min-operations nums k)
-  (bitcount (foldl bitwise-xor k nums)))
+  (bitcount (foldl bitwise-xor
+                   k
+                   (filter-map (lambda (lst) (and (odd? (length lst)) (car lst)))
+                               (group-by identity nums)))))
 
-(min-operations (list 1 2 3 4) 1)
+(min-operations (list 1 2 3 4 1 2 3) 1)
