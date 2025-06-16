@@ -4,8 +4,7 @@
   (for/fold ([hgroup (make-immutable-hash)]
              [hcount (make-immutable-hash)]
              [out empty]
-             #:result (append out (hash-values hgroup))
-             )
+             #:result (append out (hash-values hgroup)))
             ([n (in-list groupSizes)]
              [i (in-naturals)])
 
