@@ -1,25 +1,31 @@
 #lang racket
 
 (define (garbage-collection garbage travel)
-  (define gbg (map string->list garbage))
+  ;; (define gbg (map string->list garbage))
+  (let ([giga (let loop ([i (sub1 (length garbage))]
+                         [s (reverse garbage)]
+                         [Mi 0]
+                         [Gi 0]
+                         [Pi 0])
+                ;; (displayln (format "i: ~a, s: ~a, Mi: ~a, Gi: ~a, Pi: ~a" i s Mi Gi Pi))
+                (cond
+                  [(empty? s) (list Mi Gi Pi)]
+                  [(not (ormap (curry = 0) (list Mi Gi Pi))) (list Mi Gi Pi)]
+                  [else
+                   (loop (sub1 i)
+                         (cdr s)
+                         (if (string-contains? (first s) "M")
+                             (max Mi i)
+                             Mi)
+                         (if (string-contains? (first s) "G")
+                             (max Gi i)
+                             Gi)
+                         (if (string-contains? (first s) "P")
+                             (max Pi i)
+                             Pi))]))])
+    (+ (foldl (lambda (ti acc) (+ acc (apply + (take travel ti)))) 0 giga)
+       (apply + (map string-length garbage)))
+    ))
 
-  (define-values (M G P) (values 0 0 0))
-
-  (let ([travels (for/fold ([Mi 0]
-                            [Gi 0]
-                            [Pi 0]
-                            #:result (append (take travel Mi) (take travel Gi) (take travel Pi)))
-                           ([(s i) (in-indexed gbg)])
-                   (when (member #\M s)
-                     (set! Mi i)
-                     (set! M (+ M (count (curry char=? #\M) s))))
-                   (when (member #\G s)
-                     (set! Gi i)
-                     (set! G (+ G (count (curry char=? #\G) s))))
-                   (when (member #\P s)
-                     (set! Pi i)
-                     (set! P (+ P (count (curry char=? #\P) s))))
-                   (values Mi Gi Pi))])
-    (+ M G P (apply + travels))))
-
+;; (garbage-collection (list "G" "P" "GP" "MGP") (list 2 4 3))
 (garbage-collection (list "G" "P" "GP" "GG") (list 2 4 3))
