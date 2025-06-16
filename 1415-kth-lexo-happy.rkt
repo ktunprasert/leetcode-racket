@@ -2,24 +2,27 @@
 
 (define chars (list #\a #\b #\c))
 
-(define (generate-happy-strings n)
+(define (get-happy-string n k)
   (define result '())
+  (define found #f)
+
   (define (backtrack current-chars)
     (cond
-      [(= (length current-chars) n) (set! result (cons (reverse current-chars) result))]
+      [found #f] ; Early termination
+      [(= (length current-chars) n)
+       (set! result (cons (list->string (reverse current-chars)) result))
+       (when (= (length result) k)
+         (set! found #t))]
       [else
-       (for ([c chars])
-         (when (or (null? current-chars) (not (char=? c (first current-chars))))
+       (for ([c chars]
+             #:break found)
+         (when (and (not found) (or (null? current-chars) (not (char=? c (first current-chars)))))
            (backtrack (cons c current-chars))))]))
-
   (backtrack '())
-  (reverse result))
-
-(define (get-happy-string n k)
-  (define happy-strings (generate-happy-strings n))
-  (if (<= k (length happy-strings))
-      (list->string (list-ref happy-strings (sub1 k)))
+  (if (and (>= (length result) k) (> k 0))
+      (list-ref (reverse result) (sub1 k))
       ""))
 
+(get-happy-string 2 1)
 (get-happy-string 1 1)
 (get-happy-string 3 9)
