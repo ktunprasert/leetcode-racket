@@ -1,25 +1,23 @@
 #lang racket
 
 (define (remove-outer-parentheses s)
-  (define result empty)
-  (define current "")
-  (define depth 0)
-
-  (for ([char s])
+  (define (helper chars depth current result)
     (cond
-      [(char=? char #\()
-       (set! depth (add1 depth))
-       (when (> depth 1)
-         (set! current (string-append current (string char))))]
-      [(char=? char #\))
-       (set! depth (sub1 depth))
-       (cond
-         [(= depth 0)
-          (set! result (append result (list current)))
-          (set! current "")]
-         [else
-          (set! current (string-append current (string char)))])]))
+      [(empty? chars)
+       (string-join (reverse result) "")]
+      [(char=? (first chars) #\()
+       (let ([new-depth (add1 depth)])
+         (if (> new-depth 1)
+             (helper (rest chars) new-depth
+                     (string-append current (string (first chars))) result)
+             (helper (rest chars) new-depth current result)))]
+      [(char=? (first chars) #\))
+       (let ([new-depth (sub1 depth)])
+         (if (= new-depth 0)
+             (helper (rest chars) new-depth "" (cons current result))
+             (helper (rest chars) new-depth
+                     (string-append current (string (first chars))) result)))]))
 
-  (string-join result ""))
+  (helper (string->list s) 0 "" empty))
 
 (remove-outer-parentheses "(()())(())")
