@@ -4,7 +4,8 @@
   (for/fold ([local-max -1])
             ([i (in-range (sub1 (length nums)))])
     (define ns (drop nums i))
-    (apply max (cons local-max (map (curryr - (first ns)) (filter (curryr > (first ns)) (rest ns)))))))
+    (for/fold ([local-max local-max]) ([n ns] #:when (> n (first ns)))
+      (max local-max (- n (first ns))))))
 
 (maximum-difference '(7 1 5 4))
 (maximum-difference '(9 4 3 2))
