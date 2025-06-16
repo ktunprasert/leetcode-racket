@@ -1,6 +1,11 @@
 #lang racket
 
 (define (garbage-collection garbage travel)
+  (define tsum (make-hash))
+  (for ([(t i) (in-indexed travel)])
+    (hash-set! tsum i (+ t (hash-ref! tsum (sub1 i) 0))))
+  ;; (displayln tsum)
+
   (let ([giga (let loop ([i (sub1 (length garbage))]
                          [s (reverse garbage)]
                          [Mi 0]
@@ -21,8 +26,18 @@
                          (if (string-contains? (first s) "P")
                              (max Pi i)
                              Pi))]))])
-    (+ (foldl (lambda (ti acc) (+ acc (apply + (take travel ti)))) 0 giga)
-       (apply + (map string-length garbage)))))
+
+    ;; (displayln giga)
+    ;; (displayln (map (lambda (key) (hash-ref! tsum (sub1 key) 0)) giga))
+    ;; (displayln (apply + (map string-length garbage)))
+
+    (+ (foldl (lambda (key acc) (+ acc (hash-ref! tsum (sub1 key) 0))) 0 giga)
+       (apply + (map string-length garbage)))
+
+    ;; (+ (foldl (lambda (ti acc) (+ acc (apply + (take travel ti)))) 0 giga)
+    ;;    ;; (+ (apply + (map (curry hash-ref! tsum) giga ) )
+    ;;    (apply + (map string-length garbage)))
+    ))
 
 ;; (garbage-collection (list "G" "P" "GP" "MGP") (list 2 4 3))
 (garbage-collection (list "G" "P" "GP" "GG") (list 2 4 3))
