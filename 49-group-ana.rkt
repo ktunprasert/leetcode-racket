@@ -6,9 +6,9 @@
 (define (encode s)
   (define b (make-bytes 26))
   (for ([s s])
-    (let* ([k (charkey s)]
-           [n (bytes-ref b k)])
-      (bytes-set! b k (+ n 1))))
+    (define k (charkey s))
+    (define n (bytes-ref b k))
+    (bytes-set! b k (+ n 1)))
   b)
 
 (define (group-anagrams strs)
