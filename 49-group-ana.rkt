@@ -1,17 +1,21 @@
 #lang racket
 
-(define memoize (make-hash))
-(define (make-anagram-key s)
-  (if (hash-has-key? memoize s)
-      (hash-ref memoize s)
-      (sort (string->list s) char<?)))
+(define (charkey c)
+  (- (char->integer c) 97))
+
+(define (encode s)
+  (define b (make-bytes 26))
+  (for ([s s])
+    (let* ([k (charkey s)]
+           [n (bytes-ref b k)])
+      (bytes-set! b k (+ n 1))))
+  b)
 
 (define (group-anagrams strs)
-  (let ([groups (make-hash)])
-    (for ([str strs])
-      (let ([key (sort (string->list str) char<?)])
-        (hash-update! groups key (lambda (lst) (cons str lst)) '())))
-    (hash-values groups)))
+  (group-by encode strs))
+
+(encode "eat")
+(encode "ate")
 
 (group-anagrams '("eat" "tea" "tan" "ate" "nat" "bat"))
 (group-anagrams '("" "c" "d"))
