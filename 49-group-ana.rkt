@@ -1,18 +1,13 @@
 #lang racket
 
-(define memoize (make-hash))
-(define (sort-convert s)
-  (if (hash-has-key? memoize s)
-      (hash-ref memoize s)
-      (let ([sorted (sort (string->list s) char<?)])
-        (hash-set! memoize s sorted)
-        sorted)))
-
-(define (string-anagram-eq? a b)
-  (equal-always? (sort-convert a) (sort-convert b)))
-
-(define (group-anagrams strs)
-  (group-by identity strs string-anagram-eq?))
+ (define (group-anagrams strs)
+   (let ([groups (make-hash)])
+     (for ([str strs])
+       (let ([key (list->string (sort (string->list str) char<?))])
+         (hash-update! groups key
+                       (lambda (lst) (cons str lst))
+                       '())))
+     (hash-values groups)))
 
 (group-anagrams '("eat" "tea" "tan" "ate" "nat" "bat"))
 (group-anagrams '("" "c" "d"))
