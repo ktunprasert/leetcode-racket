@@ -1,8 +1,6 @@
 #lang racket
 
 (define (check-if-pangram sentence)
-  (= 26
-     (length (hash-keys (for/hash ([s sentence])
-                          (values s #t))))))
+  (= 26 (set-count (list->set (string->list sentence)))))
 
 (check-if-pangram "thequickbrownfoxjumpsoverthelazydog")
