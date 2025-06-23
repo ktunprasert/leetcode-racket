@@ -2,12 +2,11 @@
 
 (define (first-palindrome words)
   (or (for/or ([w words])
-        (if (for/and ([c w]
-                      [i (in-naturals)])
-              #:break (> i (quotient (string-length w) 2))
-              (char=? (string-ref w (- (sub1 (string-length w)) i)) c))
-            w
-            #f))
+        (and (for/and ([c w]
+                       [i (in-naturals)])
+               #:break (> i (quotient (string-length w) 2))
+               (char=? (string-ref w (- (sub1 (string-length w)) i)) c))
+             w))
       ""))
 
 (first-palindrome '("abc" "def" "racecar"))
