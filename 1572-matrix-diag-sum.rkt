@@ -2,7 +2,7 @@
 
 (define (diagonal-sum mat)
   (define cols (length (first mat)))
-  (define (grid-at pair)
+  (define (grid-at mat pair)
     ((compose (curryr list-ref (car pair)) (curryr list-ref (cdr pair))) mat))
   (let loop ([offset 0]
              [n 0]
@@ -10,8 +10,8 @@
     (cond
       [(= offset cols) sum]
       [else
-       (define left-n (grid-at (cons n n)))
-       (define right-n (grid-at (cons n (- cols offset 1))))
+       (define left-n (grid-at mat (cons n n)))
+       (define right-n (grid-at mat (cons n (- cols offset 1))))
        (when (= n (- cols offset 1))
          (set! left-n 0))
        (loop (add1 offset) (add1 n) (+ sum left-n right-n))])))
