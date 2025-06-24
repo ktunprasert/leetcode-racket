@@ -4,7 +4,7 @@
   (define sl1 (string-length word1))
   (define sl2 (string-length word2))
 
-  (string-append (apply string
+  (string-append (list->string
                         (flatten (for/list ([w1 word1]
                                             [w2 word2])
                                    (list w1 w2))))
