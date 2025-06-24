@@ -5,11 +5,12 @@
   (define (digits n [acc empty])
     (cond
       [(zero? n) acc]
+      [(zero? (remainder n 10)) #f]
       [else (digits (quotient n 10) (cons (remainder n 10) acc))]))
   (define digs empty)
   (for/list ([n target]
              #:do [(set! digs (digits n))]
-             #:when (not (index-of digs 0))
+             #:when digs
              #:when (andmap (λ (div) (zero? (modulo n div))) digs))
     n))
 
