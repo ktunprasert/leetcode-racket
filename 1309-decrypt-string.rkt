@@ -5,8 +5,8 @@
 (define the-lexer
   (lexer [(eof) eof]
          [(concatenation (repetition 2 2 numeric) "#")
-          (string->number (substring lexeme 0 (sub1 (string-length lexeme))))]
-         [(repetition 1 1 numeric) (string->number lexeme)]
+          (+ 96 (string->number (substring lexeme 0 (sub1 (string-length lexeme)))))]
+         [(repetition 1 1 numeric) (+ 96 (string->number lexeme))]
          [any-char (the-lexer input-port)]))
 
 (define (freq-alphabets s)
@@ -14,7 +14,7 @@
   (let ([numbers (do ([n (the-lexer sport) (the-lexer sport)] [ns empty])
                      ((eof-object? n) (reverse ns))
                      (set! ns (cons n ns)))])
-    (list->string (map integer->char (map (curry + 96) numbers)) )))
+    (list->string (map integer->char numbers))))
 
 (freq-alphabets "123456")
 (freq-alphabets "10#")
