@@ -10,11 +10,9 @@
     (cond
       [(= offset cols) sum]
       [else
-       (define left (cons n n))
-       (define right (cons n (- cols offset 1)))
-       (define left-n (grid-at left))
-       (define right-n (grid-at right))
-       (when (equal? left right)
+       (define left-n (grid-at (cons n n)))
+       (define right-n (grid-at (cons n (- cols offset 1))))
+       (when (= n (- cols offset 1))
          (set! left-n 0))
        (loop (add1 offset) (add1 n) (+ sum left-n right-n))])))
 
