@@ -10,7 +10,7 @@
   (for/list ([n target]
              #:do [(set! digs (digits n))]
              #:when (not (index-of digs 0))
-             #:when (andmap (λ (div) (zero? (modulo n div))) (digits n)))
+             #:when (andmap (λ (div) (zero? (modulo n div))) digs))
     n))
 
 (self-dividing-numbers 1 22)
