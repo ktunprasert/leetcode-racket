@@ -7,7 +7,11 @@
 
 (define/contract (sort-by-bits arr)
   (-> (listof exact-integer?) (listof exact-integer?))
-  (sort arr (λ (a b) (or (< (bit-count a) (bit-count b)) (< a b)))))
+  (sort arr (λ (a b)
+              (let ([bits-a (bit-count a)]
+                    [bits-b (bit-count b)])
+                (or (< bits-a bits-b)
+                    (and (= bits-a bits-b) (< a b)))))))
 
 (sort-by-bits '(0 1 2 3 4 5 6 7 8))
 
