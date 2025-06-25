@@ -6,7 +6,13 @@
   (define n-len (length nums))
   (define (ref i)
     (vector-ref sorted i))
-  (= expected-pairs (count (λ (i j) (= (ref i) (ref j))) (range 0 n-len 2) (range 1 n-len 2))))
+  (for/fold ([total 0]
+             #:result (= expected-pairs total))
+            ([i (in-range 0 n-len 2)]
+             [j (in-range 1 n-len 2)]
+             #:final (> total expected-pairs)
+             #:break ((negate =) (ref i) (ref j)))
+    (add1 total)))
 
 (divide-array '[2 2 3 3])
 (divide-array '[1 2 3 4])
