@@ -4,8 +4,7 @@
   (define freq (make-vector 10 0))
   (for ([d digits])
     (vector-set! freq d (add1 (vector-ref freq d))))
-  (define (freq-ref n)
-    (vector-ref freq n))
+  (define freq-ref (curry vector-ref freq))
   (for*/list ([a (in-range 1 10)]
               [b 10]
               [c (in-range 0 10 2)]
