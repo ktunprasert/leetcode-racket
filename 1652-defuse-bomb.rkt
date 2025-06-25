@@ -10,9 +10,7 @@
          (build-list (abs k) (curryr + k))
          (build-list k (curryr + 1))))
    (for/list ([i (in-range code-len)])
-     (foldl (λ (i acc) (+ acc (vector-ref code-vec i)))
-            0
-            (map (compose (curryr modulo code-len) (curry + i)) cyclic-range)))])
+     (foldl (λ (j acc) (+ acc (vector-ref code-vec (modulo (+ i j) code-len)))) 0 cyclic-range))])
 
 ;; (decrypt '(1 2 3 4 5) 0)
 ;; (decrypt '(1 2 3 4 5) 1)
