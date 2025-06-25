@@ -7,5 +7,4 @@
     (hash-update! char-count c add1 0))
   (apply = (hash-values char-count)))
 
-
 (are-occurrences-equal "abacbc") ; => #t
