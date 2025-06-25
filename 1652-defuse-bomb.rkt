@@ -5,15 +5,12 @@
   [(_ _)
    (define code-vec (list->vector code))
    (define code-len (vector-length code-vec))
-   (define out (make-hash))
-   (define (cyclic-range i k)
+   (define (cyclic-range i)
      (if (negative? k)
          (build-list (abs k) (compose (curryr modulo code-len) (curryr + k i)))
          (build-list k (compose (curryr modulo code-len) (curryr + i 1)))))
-   (for* ([i (in-range code-len)]
-          [ix (cyclic-range i k)])
-     (hash-update! out i (curry + (vector-ref code-vec ix)) 0))
-   (hash-values out #t)])
+   (for/list ([i (in-range code-len)])
+     (foldl (λ (i acc) (+ acc (vector-ref code-vec i))) 0 (cyclic-range i)))])
 
 ;; (decrypt '(1 2 3 4 5) 0)
 (decrypt '(1 2 3 4 5) 1)
