@@ -5,7 +5,7 @@
   (define sm (apply string (string->list s)))
   (define chead void)
   (define ctail void)
-  (for* ([i (quotient slen 2)]
+  (for* ([i (add1 (quotient slen 2))]
          #:do [(set! chead (string-ref s i)) (set! ctail (string-ref s (- slen i 1)))]
          #:unless (equal? chead ctail))
     (if (char<? chead ctail)
