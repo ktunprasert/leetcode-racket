@@ -2,16 +2,20 @@
 
 (define (make-smallest-palindrome s)
   (define slen (string-length s))
-  (for*/lists (head tail
-                    #:result (if (even? slen)
-                                 (list->string (append (drop-right head 1) (cdr (reverse tail))))
-                                 (list->string (append head (cdr (reverse tail))))))
-              ([i (add1 (quotient slen 2))])
-              (define chead (string-ref s i))
-              (define ctail (string-ref s (- slen i 1)))
-              (if (char<? chead ctail)
-                  (values chead chead)
-                  (values ctail ctail))))
+  (define sm (apply string (string->list s)))
+  (for* ([i (add1 (quotient slen 2))]
+         #:unless (equal? (string-ref s i) (string-ref s (- slen i 1))))
+    (define chead (string-ref s i))
+    (define ctail (string-ref s (- slen i 1)))
+    (if (char<? chead ctail)
+        (begin
+          (string-set! sm i chead)
+          (string-set! sm (- slen i 1) chead))
+        (begin
+          (string-set! sm i ctail)
+          (string-set! sm (- slen i 1) ctail))))
+
+  sm)
 
 (make-smallest-palindrome "efcge")
 (make-smallest-palindrome "abcd")
