@@ -3,10 +3,11 @@
 (define (make-smallest-palindrome s)
   (define slen (string-length s))
   (define sm (apply string (string->list s)))
+  (define chead void)
+  (define ctail void)
   (for* ([i (add1 (quotient slen 2))]
-         #:unless (equal? (string-ref s i) (string-ref s (- slen i 1))))
-    (define chead (string-ref s i))
-    (define ctail (string-ref s (- slen i 1)))
+         #:do [(set! chead (string-ref s i)) (set! ctail (string-ref s (- slen i 1)))]
+         #:unless (equal? chead ctail))
     (if (char<? chead ctail)
         (begin
           (string-set! sm i chead)
