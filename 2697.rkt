@@ -2,7 +2,7 @@
 
 (define (make-smallest-palindrome s)
   (define slen (string-length s))
-  (define sm (string-copy s))
+  (define sm (apply string (string->list s)))
   (define chead void)
   (define ctail void)
   (for* ([i (add1 (quotient slen 2))]
