@@ -9,13 +9,8 @@
          #:do [(set! chead (string-ref s i)) (set! ctail (string-ref s (- slen i 1)))]
          #:unless (equal? chead ctail))
     (if (char<? chead ctail)
-        (begin
-          (string-set! sm i chead)
-          (string-set! sm (- slen i 1) chead))
-        (begin
-          (string-set! sm i ctail)
-          (string-set! sm (- slen i 1) ctail))))
-
+        (string-set! sm (- slen i 1) chead)
+        (string-set! sm i ctail)))
   sm)
 
 (make-smallest-palindrome "efcge")
