@@ -1,16 +1,14 @@
 #lang racket
 
 (define (is-subsequence s t)
-  (if (zero? (string-length s))
-      true
-      (let loop ([s (string->list s)]
-                 [t (string->list t)])
-        (cond
-          [(and (empty? s) (empty? t)) #t]
-          [(empty? s) #f]
-          [(empty? t) #f]
-          [(char=? (first s) (first t)) (loop (cdr s) (cdr t))]
-          [else (loop s (cdr t))]))))
+  (let loop ([s (string->list s)]
+             [t (string->list t)])
+    (cond
+      [(and (empty? s) (empty? t)) #t]
+      [(empty? s) #t]
+      [(empty? t) #f]
+      [(char=? (first s) (first t)) (loop (cdr s) (cdr t))]
+      [else (loop s (cdr t))])))
 
 (is-subsequence "" "affbc")
 (is-subsequence "abc" "affbc")
