@@ -4,7 +4,6 @@
   (let loop ([s (string->list s)]
              [t (string->list t)])
     (cond
-      [(and (empty? s) (empty? t)) #t]
       [(empty? s) #t]
       [(empty? t) #f]
       [(char=? (first s) (first t)) (loop (cdr s) (cdr t))]
