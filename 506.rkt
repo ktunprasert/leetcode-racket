@@ -1,9 +1,8 @@
 #lang racket
 
 (define (find-relative-ranks score)
-  (set! score (list->vector score))
   (define score-map (make-hash))
-  (for ([n (vector-sort score >)]
+  (for ([n (sort score >)]
         [i (sequence-append (list "Gold Medal" "Silver Medal" "Bronze Medal") (in-naturals 4))])
     (hash-set! score-map n (~a i)))
   (for/list ([s score])
