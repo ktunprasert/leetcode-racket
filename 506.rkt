@@ -2,11 +2,10 @@
 
 (define (find-relative-ranks score)
   (set! score (list->vector score))
-  (define score-map
-    (for/hash ([n (vector-sort score >)]
-               [i (sequence-append (list "Gold Medal" "Silver Medal" "Bronze Medal")
-                                   (in-naturals 4))])
-      (values n (~a i))))
+  (define score-map (make-hash))
+  (for ([n (vector-sort score >)]
+        [i (sequence-append (list "Gold Medal" "Silver Medal" "Bronze Medal") (in-naturals 4))])
+    (hash-set! score-map n (~a i)))
   (for/list ([s score])
     (hash-ref score-map s)))
 
