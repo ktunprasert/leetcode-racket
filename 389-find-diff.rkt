@@ -1,11 +1,8 @@
 #lang racket
 
-(define/contract (find-the-difference s t)
-  (-> string? string? char?)
-  (or (for/first ([c t]
-                  #:unless (string-contains? s (~a c)))
-        c))
-  (string-ref t (sub1 (string-length t))))
+(define (find-the-difference s t)
+  (integer->char (for/sum ([cs (string-append s (~a (integer->char 0)))] [ct t])
+                          (- (char->integer ct) (char->integer cs)))))
 
 (find-the-difference "abcd" "abcde")
 (find-the-difference "aa" "aaa")
