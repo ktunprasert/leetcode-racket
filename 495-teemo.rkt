@@ -1,7 +1,5 @@
 #lang racket
 
-;; (println (list total ns prev-end))
-
 (define (find-poisoned-duration series duration)
   (define tlen (length series))
   (define time (* duration tlen))
