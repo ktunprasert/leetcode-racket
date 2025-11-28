@@ -16,7 +16,6 @@
              #:result (list (sort zloss <) (sort oneloss <)))
             ([p (in-hash-pairs players)])
     (match-let ([(cons player score) p])
-
       (match score
         [0 (values (cons player zloss) oneloss)]
         [1 (values zloss (cons player oneloss))]
