@@ -13,7 +13,7 @@
 
   (for/fold ([zloss empty]
              [oneloss empty]
-             #:result (list (reverse zloss) (reverse oneloss)))
+             #:result (list (sort zloss <) (sort oneloss <)))
             ([p (in-hash-pairs players)])
     (match-let ([(cons player score) p])
 
